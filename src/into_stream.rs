@@ -47,6 +47,16 @@ impl<T> IntoStream for Vec<T> {
     }
 }
 
+// TODO: Specialization
+// impl<St: Stream> IntoStream for St {
+//     type Item = St::Item;
+//     type IntoStream = St;
+
+//     fn into_stream(self) -> Self::IntoStream {
+//         self
+//     }
+// }
+
 #[cfg(test)]
 mod tests {
     use super::IntoStream;
