@@ -1,13 +1,13 @@
 use crate::{interleave, Interleave};
 use futures_core::stream::Stream;
 
-/// The equivalent of [`itertools::Itertools`](https://docs.rs/itertools/0.9.0/itertools/trait.Itertools.html)
+/// The equivalent of [`itertools::Itertools`]
 ///
-/// Do you love [`itertools::Itertools`] and wish your [`Stream`]s implemented it? Fret no more! Flood to the rescue
+/// Do you love [`itertools::Itertools`] and wish your [`Stream`]s implemented it? Fret no more! Flood to the rescue\
 /// This is a bit of WIP (Work In Progress) feel free to [submit PRs](https://github.com/Mathspy/flood/pulls) implementing the rest of the methods. Otherwise they shall be implemented as they are needed
 ///
-/// [`Stream`](futures_core::stream::Stream)
-/// [`itertools::Itertools`](https://docs.rs/itertools/0.9.0/itertools/trait.Itertools.html)
+/// [`Stream`]: futures_core::stream::Stream
+/// [`itertools::Itertools`]: https://docs.rs/itertools/0.9.0/itertools/trait.Itertools.html
 pub trait Flood: Stream {
     fn interleave<J>(self, other: J) -> Interleave<Self, J>
     where

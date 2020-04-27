@@ -4,9 +4,12 @@ use futures_util::stream::{iter, Iter};
 /// Conversion into an [`Stream`].
 ///
 /// By implementing IntoStream for a type, you define how it will be converted to a [`Stream`].\
-/// This is the [`Stream`] trait parallel to [`IntoIterator`](std::iter::IntoIterator) for [`Iterator`](std::iter::Iterator)s.
+/// This is the [`Stream`] trait parallel to [`IntoIterator`] for [`Iterator`](std::iter::Iterator)s.
+///
+/// A note of caution is to not implement generic methods for this like you'd for [`IntoIterator`] because without [specialization](https://github.com/rust-lang/rust/issues/31844) it's not currently possible to blanket implement this for all [`Stream`]s
 ///
 /// [`Stream`]: futures_core::stream::Stream
+/// [`IntoIterator`]: std::iter::IntoIterator
 pub trait IntoStream {
     /// The type of the elements being streamed.
     type Item;
