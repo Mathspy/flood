@@ -1,3 +1,6 @@
+#![deny(clippy::all)]
+#![allow(clippy::needless_doctest_main)]
+
 //! The missing pieces of [`Stream`]s
 //!
 //! This is meant to be to [`Stream`]s what [`itertools`] is to [`Iterator`]s.\
