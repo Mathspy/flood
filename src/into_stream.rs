@@ -41,9 +41,9 @@ pub trait IntoStream {
     fn into_stream(self) -> Self::IntoStream;
 }
 
-impl<T> IntoStream for Vec<T> {
-    type Item = T;
-    type IntoStream = Iter<<Self as IntoIterator>::IntoIter>;
+impl<T> IntoStream for T where T: IntoIterator {
+    type Item = T::Item;
+    type IntoStream = Iter<T::IntoIter>;
 
     fn into_stream(self) -> Self::IntoStream {
         iter(self)
@@ -74,6 +74,30 @@ mod tests {
         assert_eq!(Some(1), stream.next().await);
         assert_eq!(Some(2), stream.next().await);
         assert_eq!(Some(3), stream.next().await);
+        assert_eq!(None, stream.next().await);
+    }
+
+    // I am not putting this test here to avoid breaking crater runs.
+    // #[tokio::test]
+    // async fn into_stream_array() {
+    //     let arr = [1, 2, 3];
+    //     let mut stream = arr.into_stream();
+
+    //     assert_eq!(Some(1), stream.next().await);
+    //     assert_eq!(Some(2), stream.next().await);
+    //     assert_eq!(Some(3), stream.next().await);
+    //     assert_eq!(None, stream.next().await);
+    // }
+
+    #[tokio::test]
+    async fn into_stream_slice() {
+        let v = vec![1, 2, 3];
+        let slice = &v[..];
+        let mut stream = slice.into_stream();
+
+        assert_eq!(Some(&1), stream.next().await);
+        assert_eq!(Some(&2), stream.next().await);
+        assert_eq!(Some(&3), stream.next().await);
         assert_eq!(None, stream.next().await);
     }
 }
